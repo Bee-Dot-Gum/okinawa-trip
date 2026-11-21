@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B5F68">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>沖縄＋江ノ島 旅のしおり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #F6F1E7;
+    --ink: #1C2B33;
+    --sub: #56636B;
+    --line: #E6DFD0;
+    --card: #FFFFFF;
+    --chip: #F3EEE3;
+    --soft: #EEF3F6;
+    --softink: #1F5F99;
+    --teal: #0B5F68;
+    --day: #0B5F68;
+    --sea: #CFE8EC;
+    --land: #F6F1E7;
+    --coast: #B9D7DC;
+  }
+  body.dark {
+    --sand: #0F1C24;
+    --ink: #EEF3F4;
+    --sub: #A9B6BB;
+    --line: #2A4552;
+    --card: #172A35;
+    --chip: #22394A;
+    --soft: #1E3A4A;
+    --softink: #8FCFE0;
+    --sea: #12303C;
+    --land: #2A3F4A;
+    --coast: #3B5A66;
+  }
+  .themebtn { position: absolute; top: calc(10px + env(safe-area-inset-top)); right: 10px; z-index: 20; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(0,0,0,.28); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; min-width: 0; }
+  .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; line-height: 1.6; white-space: nowrap; flex-shrink: 0; }
+  .tag.t-yen { background: #FBEEDD; color: #8A4B12; }
+  .tag.t-book { background: #FBE3DE; color: #9A2E1A; }
+  .tag.t-in { background: #E1EEF7; color: #1F5F99; }
+  .tag.t-time { background: #EDE7F6; color: #5B3F8C; }
+  .tag.t-free { background: #E3F1E8; color: #1E6B3A; }
+  .tag.t-opt { background: #1C2B33; color: #FFFFFF; }
+  body.dark .tag.t-opt { background: #EEF3F4; color: #1C2B33; }
+  .stop.opt { border: 2px dashed var(--line); background: transparent; }
+  .wxbtn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; min-height: 40px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,.18); color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--sand); color: var(--ink); font-family: 'Noto Sans JP', sans-serif; -webkit-text-size-adjust: 100%; }
+  body { min-height: 100vh; }
+  button { font-family: inherit; }
+  a { color: inherit; }
+  .app { position: relative; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+  .view { display: none; }
+  .view.on { display: block; }
+  .round { font-family: 'Zen Maru Gothic', sans-serif; }
+
+  /* ---------- header ---------- */
+  .dayhead { background: var(--day); color: #fff; padding: calc(18px + env(safe-area-inset-top)) 18px 14px; }
+  .dayhead .kicker { font-size: 12px; font-weight: 700; letter-spacing: .18em; display: flex; justify-content: space-between; align-items: center; }
+  .badge { padding: 3px 10px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: 0; }
+  .dayhead h1 { margin: 6px 0 2px; font-size: 28px; line-height: 1.15; }
+  .dayhead .area { font-size: 14px; opacity: .95; }
+  .daytabs { display: flex; gap: 6px; padding: 10px 12px; background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top); z-index: 5; }
+  .daytabs button { flex: 1; min-height: 44px; border: 0; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; background: var(--chip); color: var(--sub); }
+  .daytabs button[aria-pressed="true"] { color: #fff; }
+
+  .wrap { padding: 14px 16px 8px; display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--card); border-radius: 16px; padding: 14px 16px; }
+  .sectiontitle { font-size: 13px; font-weight: 700; color: var(--sub); margin: 6px 4px -2px; }
+
+  /* ---------- now / next ---------- */
+  .now { background: var(--day); color: #fff; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .now .lbl { font-size: 13px; font-weight: 700; letter-spacing: .1em; opacity: .95; }
+  .now .name { font-size: 24px; font-weight: 700; line-height: 1.3; }
+  .now .memo { font-size: 13px; opacity: .95; }
+  .bigmap { margin-top: 6px; min-height: 48px; border-radius: 14px; background: #fff; color: var(--day); display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 15px; font-weight: 700; text-decoration: none; }
+  .next { background: var(--card); border: 2px solid var(--line); border-radius: 20px; padding: 14px 18px; display: flex; flex-direction: column; gap: 2px; }
+  .next .lbl { font-size: 13px; font-weight: 700; color: var(--day); }
+  .next .name { font-size: 19px; font-weight: 700; line-height: 1.35; }
+  .next .memo { font-size: 13px; color: var(--sub); }
+  .hint { font-size: 12px; color: var(--sub); padding: 0 4px; line-height: 1.6; }
+
+  /* ---------- stop list ---------- */
+  .stop { display: flex; gap: 12px; align-items: center; background: var(--card); border-radius: 14px; padding: 12px 14px; }
+  .stop.past { opacity: .55; }
+  .stop.cur { outline: 3px solid var(--day); }
+  .stop .time { width: 58px; flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--day); line-height: 1.3; }
+  .stop .body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .stop .n { font-size: 15px; font-weight: 700; line-height: 1.4; }
+  .stop .m { font-size: 12px; color: var(--sub); line-height: 1.5; }
+  .mapbtn { flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px; background: var(--soft); color: var(--softink); display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; font-size: 10px; font-weight: 700; gap: 1px; }
+  .rainrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--soft); border-radius: 14px; padding: 10px 14px; min-height: 52px; }
+  .rainrow .t { display: flex; flex-direction: column; }
+  .rainrow b { font-size: 14px; color: var(--softink); }
+  .rainrow span { font-size: 12px; color: var(--ink); line-height: 1.5; }
+  .switch { position: relative; width: 52px; height: 30px; flex-shrink: 0; border: 0; border-radius: 999px; background: #C9D3D8; cursor: pointer; padding: 0; }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left .15s; }
+  .switch[aria-checked="true"] { background: #1F5F99; }
+  .switch[aria-checked="true"]::after { left: 25px; }
+  .stay { font-size: 13px; font-weight: 700; color: var(--sub); padding: 2px 4px; }
+
+  /* ---------- route ---------- */
+  .routehead { display: flex; justify-content: space-between; align-items: baseline; }
+  .routehead .total { font-size: 13px; color: var(--sub); }
+  .routehead .total b { color: var(--ink); font-size: 16px; }
+  .metro { position: relative; padding: 14px 16px 12px; }
+  .node { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--card); border: 5px solid var(--day); flex-shrink: 0; }
+  .node.ends .dot { background: var(--day); }
+  .node .nm { font-size: 16px; font-weight: 700; line-height: 1.35; }
+  .node .sb { font-size: 12px; color: var(--sub); }
+  .leg { display: flex; align-items: center; gap: 14px; min-height: 58px; }
+  .leg .rail { width: 22px; flex-shrink: 0; display: flex; justify-content: center; align-self: stretch; }
+  .leg .rail i { width: 5px; background: var(--day); border-radius: 3px; }
+  .leg.plane .rail i, .leg.train .rail i { background: repeating-linear-gradient(to bottom, var(--day) 0 7px, transparent 7px 12px); }
+  .leg.walk .rail i { background: repeating-linear-gradient(to bottom, var(--day) 0 3px, transparent 3px 7px); width: 4px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 8px; border-radius: 999px; background: var(--chip); font-size: 13px; font-weight: 700; color: var(--ink); }
+  .chip svg { color: var(--day); }
+  .mapcard { background: var(--sea); border-radius: 18px; padding: 10px; }
+  .mapcard svg { display: block; width: 100%; height: auto; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 12px; color: var(--sub); padding: 2px 4px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; }
+
+  /* ---------- home ---------- */
+  .cover { background: #0B5F68; color: #fff; padding: calc(40px + env(safe-area-inset-top)) 18px 18px; }
+  .cover .kick { font-size: 12px; font-weight: 700; letter-spacing: .3em; }
+  .cover h1 { margin: 6px 0 16px; font-size: 30px; line-height: 1.2; }
+  .pass { background: var(--card); color: var(--ink); border-radius: 22px; overflow: hidden; }
+  .pass .ph { background: var(--chip); padding: 11px 18px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: .2em; color: var(--teal); }
+  body.dark .pass .ph { color: #7FD6D6; }
+  .pass .pr { display: flex; justify-content: space-between; align-items: center; padding: 18px 18px 14px; }
+  .pass .pc { display: flex; flex-direction: column; }
+  .pass .pc.r { text-align: right; }
+  .pass small { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: .05em; }
+  .pass .pc b { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: .02em; }
+  .pass .pc em { font-style: normal; font-size: 13px; color: var(--sub); }
+  body.dark .pass .plane path { fill: #7FD6D6 !important; }
+  .pass .pg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 0 18px 16px; }
+  .pass .pg span { display: flex; flex-direction: column; }
+  .pass .pg b { font-size: 15px; }
+  .pass .perf { position: relative; border-top: 2px dashed var(--line); margin: 0 16px; }
+  .pass .perf::before, .pass .perf::after { content: ''; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%; background: #0B5F68; }
+  .pass .perf::before { left: -28px; } .pass .perf::after { right: -28px; }
+  .pass .pstub { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 18px; }
+  .pass .pstub > span { display: flex; flex-direction: column; }
+  .pass .big { font-size: 36px; font-weight: 700; line-height: 1.1; color: #B4472A; }
+  body.dark .pass .big { color: #F0A58F; }
+  .pass .big small { font-size: 15px; margin-left: 3px; color: inherit; }
+  .cover .pfoot { text-align: center; font-size: 13px; margin-top: 12px; opacity: .9; }
+  .count { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .count .big { font-size: 34px; font-weight: 700; line-height: 1; }
+  .count .big small { font-size: 15px; margin-left: 4px; }
+  body.dark .gobtn { color: #0F1C24; }
+  .gobtn { min-height: 48px; padding: 0 18px; border-radius: 14px; border: 0; background: var(--ink); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .hl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .hl div { background: var(--card); border-radius: 14px; padding: 12px; }
+  .hl b { display: block; font-size: 12px; margin-bottom: 2px; }
+  .hl span { font-size: 14px; font-weight: 700; line-height: 1.4; }
+  .budget { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .budget .bx { border-radius: 14px; padding: 12px 14px; display: block; }
+  .budget b { display: block; font-size: 12px; }
+  .budget .bx > span { font-size: 22px; font-weight: 700; }
+  .budgetlink { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; }
+  .morelink { align-self: flex-end; font-size: 13px; font-weight: 700; color: var(--softink); padding: 4px 6px; }
+  .backbtn { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 14px; margin-bottom: 8px; border-radius: 999px; background: rgba(255,255,255,.18); color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; }
+  .bgroup { background: var(--card); border-radius: 16px; overflow: hidden; }
+  .bgroup .gh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .bgroup .gh b { font-size: 15px; }
+  .bgroup .gh span { font-size: 13px; color: var(--sub); white-space: nowrap; }
+  .bgroup .gh span strong { font-size: 16px; color: var(--ink); }
+  .brow { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+  .brow:last-child { border-bottom: 0; }
+  .brow .l { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .brow .l span { font-size: 14px; }
+  .brow .l small { font-size: 11px; color: var(--sub); line-height: 1.5; }
+  .brow .r { text-align: right; white-space: nowrap; display: flex; flex-direction: column; gap: 2px; }
+  .brow .r b { font-size: 14px; }
+  .brow .r small { font-size: 11px; color: var(--sub); }
+  .optbox { background: #FBEEDD; color: #5A3A12; border-radius: 16px; padding: 14px 16px; font-size: 14px; line-height: 1.7; }
+  body.dark .optbox { background: #3A2E1E; color: #F3DFC4; }
+
+  /* ---------- check / memo ---------- */
+  .chk { display: flex; gap: 12px; align-items: center; background: var(--card); border-radius: 12px; padding: 12px 14px; min-height: 52px; cursor: pointer; }
+  .chk input { width: 22px; height: 22px; margin: 0; accent-color: #0B5F68; flex-shrink: 0; }
+  .chk .n { font-size: 15px; font-weight: 700; }
+  .chk .m { font-size: 12px; color: var(--sub); display: block; }
+  .chk.done .n { text-decoration: line-through; color: var(--sub); }
+  .progress { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .progress i { display: block; height: 100%; background: #0B5F68; border-radius: 999px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 700; color: var(--sub); }
+  .field input, .field textarea { font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink); width: 100%; }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .facts { display: flex; flex-direction: column; }
+  .facts div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .facts div:last-child { border-bottom: 0; }
+  .facts b { text-align: right; }
+  .saved { font-size: 12px; color: #0B5F68; font-weight: 700; min-height: 18px; padding: 0 4px; }
+
+  /* ---------- bottom nav ---------- */
+  nav.tabs { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 6px 6px calc(8px + env(safe-area-inset-bottom)); display: flex; justify-content: center; z-index: 10; }
+  nav.tabs .in { max-width: 480px; width: 100%; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  nav.tabs a { min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 11px; font-weight: 700; color: var(--sub); border-radius: 12px; }
+  nav.tabs a[aria-current="page"] { color: var(--softink); background: var(--soft); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* ---------- boarding-pass style ---------- */
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .lb { font-size: 10px; font-weight: 700; letter-spacing: .12em; color: var(--sub); }
+  .dayhead .lb { color: rgba(255,255,255,.8); }
+  .bp { background: var(--card); border-radius: 18px; overflow: hidden; border: 2px solid var(--day); }
+  .bp .bh { background: var(--day); color: #fff; padding: 7px 16px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; letter-spacing: .15em; }
+  .bp .bm { padding: 12px 16px; display: flex; flex-direction: column; gap: 3px; }
+  .bp .bm .name { font-size: 21px; font-weight: 700; line-height: 1.3; }
+  .bp .bm .memo { font-size: 13px; color: var(--sub); }
+  .bp .bm .bigmap { background: var(--day); color: #fff; margin-top: 8px; }
+  .tperf { position: relative; border-top: 2px dashed var(--line); margin: 0 14px; }
+  .tperf::before, .tperf::after { content: ''; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%; background: var(--sand); }
+  .bp .tperf::before { left: -26px; } .bp .tperf::after { right: -26px; }
+  .tperf.flat::before { left: -24px; } .tperf.flat::after { right: -24px; }
+  .bp .bg3 { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; padding: 12px 16px 14px; align-items: end; }
+  .bp .bg3 > span { display: flex; flex-direction: column; min-width: 0; }
+  .bp .bg3 b { font-size: 17px; }
+  .bp .bg3 .dest { font-size: 14px; line-height: 1.35; }
+  .bp .bg3 .left { color: #B4472A; text-align: right; }
+  body.dark .bp .bg3 .left { color: #F0A58F; }
+  .daytabs { background: var(--day); border-bottom: 0; padding: 4px 12px 14px; }
+  .daytabs button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; min-height: 48px; padding: 4px 0; background: transparent; color: #fff; border: 1.5px dashed rgba(255,255,255,.55); line-height: 1.2; }
+  .daytabs button i { font-style: normal; font-size: 9px; letter-spacing: .1em; }
+  .daytabs button b { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; }
+  .daytabs button[aria-pressed="true"] { background: var(--card); color: var(--day); border-style: solid; border-color: var(--card); }
+  body.dark .daytabs button[aria-pressed="true"] { color: #fff; }
+  .itin { background: var(--card); border-radius: 18px; overflow: hidden; }
+  .itin .ih { background: var(--chip); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .itin .ih .lb:first-child { color: var(--day); }
+  body.dark .itin .ih .lb:first-child { color: #fff; }
+  .stop { background: transparent; border-radius: 0; border-bottom: 1px dashed var(--line); padding: 11px 14px 11px 16px; }
+  .stop:last-child { border-bottom: 0; }
+  .stop .time { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; width: 52px; }
+  body.dark .stop .time { color: #fff; }
+  .stop.cur { outline: 0; box-shadow: inset 5px 0 0 var(--day); background: var(--chip); }
+  .stop.opt { border: 0; border-top: 2px dashed var(--line); background: transparent; }
+  .stop .done, .stop .nx { flex-shrink: 0; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px; }
+  .stop .done { color: var(--sub); }
+  .stop .nx { background: #FBEEDD; color: #8A4B12; }
+  .mapbtn { width: 42px; height: 42px; }
+  /* route board */
+  .board { background: #0F1C24; color: #EEF3F4; border-radius: 18px; overflow: hidden; }
+  body.dark .board { background: #0A141A; border: 1px solid var(--line); }
+  .board .brh, .board .brr { display: grid; grid-template-columns: 52px minmax(0, 1fr) 22px auto; gap: 8px; align-items: center; padding: 10px 14px; }
+  .board .brh { padding: 8px 14px 6px; }
+  .board .brh .lb { color: #A9B6BB; }
+  .board .brr { border-top: 1px solid #22394A; }
+  .board .brr .t { font-size: 15px; font-weight: 700; color: #F7C873; }
+  .board .brr .f { font-size: 11px; color: #A9B6BB; }
+  .board .brr .to { font-size: 14px; font-weight: 700; line-height: 1.35; }
+  .board .brr svg { color: #7FD6D6; }
+  .board .brr .du { font-size: 12px; font-weight: 700; color: #7FD6D6; text-align: right; }
+  .board .bend { border-top: 1px solid #22394A; padding: 10px 14px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .board .bend b { color: #F7C873; font-size: 16px; }
+  .totalbig { font-size: 22px; font-weight: 700; color: #F7C873; }
+  /* check tags */
+  .btag { background: var(--card); border-radius: 16px; overflow: hidden; display: flex; }
+  .btag .side { width: 52px; flex-shrink: 0; color: #fff; display: flex; flex-direction: column; align-items: center; padding-top: 14px; gap: 10px; }
+  .btag .side .hole { width: 14px; height: 14px; border-radius: 50%; background: var(--sand); border: 3px solid rgba(255,255,255,.6); }
+  .btag .side b { writing-mode: vertical-rl; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: .15em; }
+  .btag .main { flex: 1; min-width: 0; padding: 12px 14px 4px; }
+  .btag .gt { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+  .btag .gt b { font-size: 15px; }
+  .btag .gt span { font-size: 13px; font-weight: 700; }
+  .chk { background: transparent; border-radius: 0; padding: 10px 0; border-top: 1px dashed var(--line); min-height: 50px; }
+  .chk input { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border-radius: 7px; border: 2px solid #CFC6B4; background: var(--card); display: grid; place-content: center; cursor: pointer; }
+  .chk input:checked { background: var(--tc); border-color: var(--tc); }
+  .chk input:checked::after { content: ''; width: 6px; height: 11px; border: solid #fff; border-width: 0 3px 3px 0; transform: translateY(-1px) rotate(45deg); }
+  .chk input:focus-visible { outline: 3px solid var(--tc); outline-offset: 2px; }
+  .chk > span:not(.stamp) { flex: 1; min-width: 0; }
+  .chk .n { font-size: 14px; }
+  .chk .stamp { flex-shrink: 0; font-size: 10px; font-weight: 700; color: var(--tc); border: 1.5px solid var(--tc); border-radius: 4px; padding: 0 4px; transform: rotate(-8deg); }
+  body.dark .chk .stamp { color: #fff; border-color: #fff; }
+  .hprog { margin-top: 12px; display: flex; align-items: center; gap: 10px; }
+  .hprog div { flex: 1; height: 10px; border-radius: 5px; background: rgba(255,255,255,.25); overflow: hidden; }
+  .hprog i { display: block; height: 100%; background: #F7C873; }
+  .hprog span { font-size: 14px; font-weight: 700; }
+  /* budget receipt */
+  .receipt { background: var(--card); border-radius: 18px; overflow: hidden; margin-top: -48px; }
+  .receipt .rt { padding: 14px 18px 10px; display: flex; justify-content: space-between; }
+  .receipt .rtot { padding: 0 18px 14px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+  .receipt .rtot .per { font-size: 34px; font-weight: 700; color: #B4472A; line-height: 1.1; }
+  body.dark .receipt .rtot .per { color: #F0A58F; }
+  .receipt .rtot .two { font-size: 18px; font-weight: 700; }
+  .receipt details { border-bottom: 1px dashed var(--line); }
+  .receipt details:last-of-type { border-bottom: 0; }
+  .receipt summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 8px; padding: 11px 18px; min-height: 48px; }
+  .receipt summary::-webkit-details-marker { display: none; }
+  .receipt summary .l { display: flex; flex-direction: column; min-width: 0; }
+  .receipt summary .l b { font-size: 14px; }
+  .receipt summary .l small { font-size: 11px; color: var(--sub); }
+  .receipt summary .dots { flex: 1; border-bottom: 2px dotted var(--line); transform: translateY(-4px); min-width: 12px; }
+  .receipt summary .v { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .receipt summary .ar { font-size: 12px; color: var(--sub); transition: transform .15s; }
+  .receipt details[open] summary .ar { transform: rotate(90deg); }
+  .receipt .brow { padding: 8px 18px 8px 26px; border-bottom: 0; border-top: 1px solid var(--line); background: var(--chip); }
+  .receipt .rf { padding: 12px 18px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; color: var(--sub); line-height: 1.6; }
+  .receipt .rf b { color: var(--ink); }
+  .barcode { width: 96px; height: 40px; flex-shrink: 0; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 7px, transparent 7px 9px, var(--ink) 9px 10px, transparent 10px 13px); }
+  .rgap { height: 6px; }
+  /* memo stubs */
+  .fboard { background: #0F1C24; color: #EEF3F4; border-radius: 16px; padding: 8px 14px 4px; }
+  body.dark .fboard { background: #0A141A; border: 1px solid var(--line); }
+  .fboard .lb { color: #7FD6D6; }
+  .fboard div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid #22394A; font-size: 13px; }
+  .fboard div b { color: #F7C873; font-size: 15px; white-space: nowrap; }
+  .fboard div small { display: block; font-size: 11px; color: #A9B6BB; }
+  .rstub { background: var(--card); border-radius: 16px; overflow: hidden; display: flex; }
+  .rstub .rm { flex: 1; min-width: 0; padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .rstub .rm label { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .rstub .rm .lb { color: var(--sc); }
+  body.dark .rstub .rm .lb { color: #fff; }
+  .rstub input, .rstub textarea { font: inherit; font-size: 16px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--sand); color: var(--ink); width: 100%; }
+  .rstub textarea { min-height: 84px; resize: vertical; }
+  .rstub .tel { width: 64px; flex-shrink: 0; border-left: 2px dashed var(--line); margin: 10px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--sc); font-size: 11px; font-weight: 700; text-decoration: none; }
+  body.dark .rstub .tel { color: #fff; }
+  .rstub .tel[hidden] { display: none; }
+  .dayhead .kicker { justify-content: flex-start; gap: 10px; padding-right: 52px; }
+  body.dark .badge { color: #0F1C24; }
+</style>
+</head>
+<body>
+<div class="app">
+  <button type="button" class="themebtn" id="themeBtn" aria-pressed="false" aria-label="夜用の暗い表示"></button>
+
+  <!-- =============== HOME =============== -->
+  <section class="view" id="v-home" aria-label="ホーム">
+    <div class="cover">
+      <div class="kick">TRIP BOOK 2026</div>
+      <h1 class="round">沖縄＋江ノ島の旅</h1>
+      <div class="pass">
+        <div class="ph"><span>BOARDING PASS</span><span>2 PAX</span></div>
+        <div class="pr">
+          <span class="pc"><small>FROM</small><b>SYO</b><em>庄内・鶴岡</em></span>
+          <svg class="plane" width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 13.5 L21 12 L2.5 10.5 L5 12 Z M9 12 L6 4.5 L8 4.5 L14 12 L8 19.5 L6 19.5 Z" style="fill: var(--teal)"/></svg>
+          <span class="pc r"><small>TO</small><b>OKA</b><em>沖縄・那覇</em></span>
+        </div>
+        <div class="pg">
+          <span><small>DATE</small><b>11/27–12/1</b></span>
+          <span><small>VIA</small><b>江ノ島</b></span>
+          <span><small>STAY</small><b>4泊5日</b></span>
+        </div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="pstub">
+          <span>
+            <small id="countLabel">出発まで</small>
+            <span class="big round" id="countBig">-</span>
+          </span>
+          <button class="gobtn" type="button" id="goToday">今日の予定へ</button>
+        </div>
+      </div>
+      <div class="pfoot">鶴岡発・男2人旅</div>
+    </div>
+    <div class="wrap">
+      <div class="sectiontitle">沖縄の3日間のルート</div>
+      <div class="mapcard" id="overviewMap"></div>
+      <div class="legend">
+        <span><i style="background:#0E7C86"></i>11/28 那覇・南部</span>
+        <span><i style="background:#1F5F99"></i>11/29 北部・美ら海</span>
+        <span><i style="background:#B4472A"></i>11/30 中部・首里</span>
+      </div>
+      <div class="hint">地図はイメージです。正確な道は「ルート」タブの地図ボタンからGoogleマップで確認してください。</div>
+
+      <div class="sectiontitle">この旅のハイライト</div>
+      <div class="hl">
+        <div><b style="color:#0E7C86">11/28 土</b><span>糸満で焼きロブスター</span></div>
+        <div><b style="color:#1F5F99">11/29 日</b><span>美ら海のジンベエザメ</span></div>
+        <div><b style="color:#B4472A">11/30 月</b><span>復元した首里城の正殿</span></div>
+        <div><b style="color:#5B3F8C">12/1 火</b><span>湘南の宝石 点灯初日</span></div>
+      </div>
+
+      <div class="sectiontitle">予算の目安</div>
+      <a href="#budget" class="budgetlink" aria-label="予算のくわしい内訳を見る">
+        <span class="budget">
+          <span class="bx" style="background:#0B5F68;color:#fff"><b>1人あたり</b><span id="homePer">-</span></span>
+          <span class="bx" style="background:var(--card)"><b style="color:var(--sub)">2人の合計</b><span id="homeTwo">-</span></span>
+        </span>
+        <span class="morelink">内訳を見る ›</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =============== BUDGET =============== -->
+  <section class="view" id="v-budget" aria-label="予算">
+    <div class="dayhead" style="background:#0B5F68; padding-bottom: 62px">
+      <a href="#home" class="backbtn">‹ ホームへ戻る</a>
+      <div class="kicker"><span>FARE · 料金のうちわけ</span></div>
+      <h1 class="round">予算の目安（2人旅）</h1>
+      <div class="area">宿・レンタカー・タクシーは「1台・1部屋の料金」を2人で割っています</div>
+    </div>
+    <div class="wrap" id="budgetBody"></div>
+  </section>
+
+  <!-- =============== PLAN =============== -->
+  <section class="view" id="v-plan" aria-label="予定">
+    <div class="dayhead" id="planHead"></div>
+    <div class="daytabs" id="planTabs" role="group" aria-label="日付をえらぶ"></div>
+    <div class="wrap" id="planBody"></div>
+  </section>
+
+  <!-- =============== ROUTE =============== -->
+  <section class="view" id="v-route" aria-label="ルート">
+    <div class="dayhead" id="routeHead"></div>
+    <div class="daytabs" id="routeTabs" role="group" aria-label="日付をえらぶ"></div>
+    <div class="wrap" id="routeBody"></div>
+  </section>
+
+  <!-- =============== CHECK =============== -->
+  <section class="view" id="v-check" aria-label="チェック">
+    <div class="dayhead" style="background:#0E7C86">
+      <div class="kicker"><span>CHECK-IN · 手荷物タグ</span></div>
+      <h1 class="round">出発前のチェック</h1>
+      <div class="area">チェックはこのスマホの中だけに保存されます</div>
+      <div class="hprog" id="checkProg"></div>
+    </div>
+    <div class="wrap" id="checkBody"></div>
+  </section>
+
+  <!-- =============== MEMO =============== -->
+  <section class="view" id="v-memo" aria-label="メモ">
+    <div class="dayhead" style="background:#1C2B33">
+      <div class="kicker"><span>PASSENGER INFO</span></div>
+      <h1 class="round">予約の控え</h1>
+      <div class="area">このスマホの中だけに保存されます</div>
+    </div>
+    <div class="wrap">
+      <div class="fboard">
+        <span class="lb">乗り遅れ注意の時刻</span>
+        <div><span>11/27 庄内 → 羽田<small>16:00に早退</small></span><b class="mono">17:30</b></div>
+        <div><span>11/28 羽田 → 那覇<small>始発</small></span><b class="mono">06:25</b></div>
+        <div><span>11/30 レンタカー返却</span><b class="mono">15:30</b></div>
+        <div><span>12/1 江の島を出るリミット</span><b class="mono">17:45</b></div>
+        <div><span>12/1 羽田 → 庄内<small>最終便</small></span><b class="mono">20:15</b></div>
+      </div>
+      <form id="memoForm" novalidate style="display:flex;flex-direction:column;gap:10px">
+        <div class="rstub" style="--sc:#5B3F8C"><div class="rm"><span class="lb">FLIGHT</span><label for="m-air">飛行機の予約番号</label><input id="m-air" data-key="air" autocomplete="off" placeholder="例：ANAの予約番号・便名"></div><a class="tel" data-tel="air" hidden><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h5l2 5-2.5 1.5a11 11 0 0 0 4 4L15 12l5 2v5a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>電話</a></div>
+        <div class="rstub" style="--sc:#0E7C86"><div class="rm"><span class="lb">HOTEL · 4泊</span><label for="m-hotel">ホテル（名前・電話・予約番号）</label><textarea id="m-hotel" data-key="hotel" placeholder="羽田／那覇／北谷／新宿"></textarea></div><a class="tel" data-tel="hotel" hidden><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h5l2 5-2.5 1.5a11 11 0 0 0 4 4L15 12l5 2v5a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>電話</a></div>
+        <div class="rstub" style="--sc:#B4472A"><div class="rm"><span class="lb">RENT A CAR</span><label for="m-car">レンタカー（会社・電話・予約番号）</label><input id="m-car" data-key="car" autocomplete="off" placeholder="例：〇〇レンタカー 098-000-0000"></div><a class="tel" data-tel="car" hidden><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h5l2 5-2.5 1.5a11 11 0 0 0 4 4L15 12l5 2v5a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>電話</a></div>
+        <div class="rstub" style="--sc:#1C2B33"><div class="rm"><span class="lb">FREE MEMO</span><label for="m-free">自由メモ</label><textarea id="m-free" data-key="free" placeholder="首里城の予約時間、お店の候補など"></textarea></div></div>
+      </form>
+      <div class="saved" id="savedMsg" role="status" aria-live="polite"></div>
+
+    </div>
+  </section>
+
+  <nav class="tabs" aria-label="メニュー">
+    <div class="in" id="navIn"></div>
+  </nav>
+</div>
+
+<script>
+(function () {
+  /* ---------------- icons ---------------- */
+  var I = {
+    home: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    plan: '<rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/>',
+    route: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/>',
+    check: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/>',
+    memo: '<path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7"/>',
+    pin: '<path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+    car: '<path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="16.5" cy="19.5" r="1.5"/>',
+    plane: '<path d="M10 3.5L12 3l1.5 7 7 3-1 2-7-1.5-1 5.5 2 1.5-.5 1.5-3.5-1-3.5 1-.5-1.5 2-1.5-1-5.5-7 1.5-1-2 7-3z"/>',
+    train: '<rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12"/><path d="M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/>',
+    walk: '<circle cx="13" cy="4" r="2"/><path d="M11 21l2-6-3-3 1-5 3 3 3 1"/><path d="M8 13l2-6"/>',
+    taxi: '<path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><path d="M10 3h4v3h-4z"/>',
+    bus: '<rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14"/><circle cx="8.5" cy="20" r="1.5"/><circle cx="15.5" cy="20" r="1.5"/>',
+    moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    cloud: '<path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4 1.5A3.3 3.3 0 0 0 7 18z"/>'
+  };
+  function ico(name, size) {
+    size = size || 18;
+    return '<svg aria-hidden="true" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + I[name] + '</svg>';
+  }
+  var MODE = { car: '車', plane: '飛行機', train: '電車', walk: '徒歩', taxi: 'タクシー', bus: '送迎バス' };
+
+  /* ---------------- data ---------------- */
+  var TK = '#5B3F8C';
+  var DAYS = [
+    { ymd: '2026-11-27', wx: '羽田', short: '11/27', date: '11/27 金', title: '東京の夜', area: '庄内 → 羽田 → 新宿', color: TK, stay: '泊：羽田空港周辺',
+      rainNote: '屋内の予定なので影響なし',
+      stops: [
+        ['16:00', '早退 → 庄内空港へ', 'オンラインチェックイン済み・荷物は機内持ち込み', '庄内空港', [['time','搭乗締切に注意']]],
+        ['17:30', '庄内 → 羽田（最終便）', '18:35 羽田着', '', []],
+        ['19:00', '羽田のホテルにチェックイン', '荷物を置いて身軽に', '羽田空港', []],
+        ['20:00', '新宿で相席屋', '羽田から電車で約45分', '相席屋 新宿', []],
+        ['22:00', '歌舞伎町でキャバクラ', '客引きにはついて行かず、お店に直接入る', '歌舞伎町', []],
+        ['24:00', 'タクシーで羽田のホテルへ', '翌朝は6:25の始発便', '', []]
+      ],
+      route: [['鶴岡（職場）', '16:00 出発'], ['庄内空港', '17:30 発'], ['羽田空港', '18:35 着'], ['羽田のホテル', 'チェックイン'], ['新宿・歌舞伎町', '夜'], ['羽田のホテル', '泊']],
+      legs: [['car', 25], ['plane', 65], ['walk', 10], ['train', 45], ['taxi', 35]]
+    },
+    { ymd: '2026-11-28', wx: '那覇', short: '11/28', date: '11/28 土', title: '那覇・南部', area: '水族館・魚市場・国際通り', color: '#0E7C86', stay: '泊：那覇（国際通り周辺）',
+      rainNote: 'そのままでOK。国際通りは屋根のあるアーケード（平和通りなど）中心に',
+      stops: [
+        ['6:25', '羽田 → 那覇（始発便）', '9:15 那覇着。機内でひと眠り', '', []],
+        ['10:00', 'レンタカー受け取り', '空港から送迎バスで営業所へ', '那覇空港 レンタカー', [['time','免許証を忘れずに']]],
+        ['10:45', 'DMMかりゆし水族館', '空港から車で約15分（豊崎）', 'DMMかりゆし水族館', [['yen','2,800円〜'],['in','屋内']]],
+        ['13:00', '糸満漁協 お魚センター', 'ロブスター焼き・カニ・海鮮丼でランチ', '糸満漁業協同組合 お魚センター', [['time','土日は19:00まで']]],
+        ['15:00', 'ホテルにチェックイン', '少し休んで夜に備える', '', []],
+        ['18:00', '夜の国際通り', '夕食は歩きながら気になったお店へ', '国際通り 那覇', []]
+      ],
+      route: [['羽田空港', '6:25 発'], ['那覇空港', '9:15 着'], ['レンタカー営業所', '10:00'], ['DMMかりゆし水族館', '10:45'], ['糸満お魚センター', '13:00 ランチ'], ['那覇のホテル', '15:00'], ['国際通り', '18:00〜']],
+      legs: [['plane', 170], ['bus', 10], ['car', 15], ['car', 10], ['car', 25], ['walk', 5]],
+      pins: ['airport', 'dmm', 'itoman', 'kokusai'], region: 'okinawa'
+    },
+    { ymd: '2026-11-29', wx: '本部町', short: '11/29', date: '11/29 日', title: '北部・美ら海', area: '美ら海・北谷・イルミネーション', color: '#1F5F99', stay: '泊：北谷（アメリカンビレッジ）',
+      rainNote: '古宇利島をやめて屋内中心に。イルミは天気次第なので公式サイトを確認',
+      stops: [
+        ['7:00', '那覇を出発', '高速で本部町まで約2時間', ''],
+        ['9:00', '沖縄美ら海水族館', '朝イチはジンベエザメの水槽が空いている', '沖縄美ら海水族館', [['yen','2,180円'],['in','屋内'],['time','入館は17:30まで']]],
+        ['12:00', '備瀬のフクギ並木', 'お昼ごはんと散策', '備瀬のフクギ並木', []],
+        ['14:00', '古宇利大橋ドライブ', '晴れた日は海の色が最高', '古宇利大橋', []],
+        ['17:00', '美浜アメリカンビレッジ', '夕日を見て、夕食は現地で良さげなお店へ', '美浜アメリカンビレッジ', []],
+        ['19:30', '東南植物楽園 イルミネーション', '光の巨大ジンベエザメと撮影（22時まで）', '東南植物楽園', [['yen','夜2,500円'],['time','入場は21:30まで']]]
+      ],
+      rainStops: [
+        ['7:00', '那覇を出発', '高速で本部町まで約2時間', ''],
+        ['9:00', '沖縄美ら海水族館', '館内をゆっくり。雨の日でも楽しめる', '沖縄美ら海水族館', [['yen','2,180円'],['in','屋内']]],
+        ['12:30', '海洋博公園でランチ', '屋根のあるエリアで休憩', '海洋博公園', []],
+        ['14:30', 'ナゴパイナップルパーク', '屋内で楽しめる名護の定番', 'ナゴパイナップルパーク', [['in','屋内']]],
+        ['17:00', '美浜アメリカンビレッジ', '屋根のあるお店を中心に。夕食は現地で', '美浜アメリカンビレッジ', []],
+        ['19:30', '東南植物楽園（開催を確認）', '雨の日は公式サイトで点灯を確認', '東南植物楽園', [['yen','夜2,500円']]]
+      ],
+      route: [['那覇のホテル', '7:00 出発'], ['沖縄美ら海水族館', '9:00'], ['備瀬のフクギ並木', '12:00'], ['古宇利大橋', '14:00'], ['アメリカンビレッジ', '17:00 夕日'], ['東南植物楽園', '19:30 イルミ'], ['北谷のホテル', '泊']],
+      legs: [['car', 120], ['car', 5], ['car', 25], ['car', 80], ['car', 25], ['car', 25]],
+      pins: ['kokusai', 'churaumi', 'kouri', 'av', 'tonan', 'av'], region: 'okinawa'
+    },
+    { ymd: '2026-11-30', wx: '沖縄市', short: '11/30', date: '11/30 月', title: '首里 → 東京', area: '動物園・首里城・新宿の夜', color: '#B4472A', stay: '泊：新宿',
+      rainNote: 'こどもの国は屋内のミュージアム中心に。首里城は正殿の中を見学',
+      stops: [
+        ['9:30', '沖縄こどもの国', '北谷から車で約20分', '沖縄こどもの国', [['yen','1,000円'],['time','火曜休み']]],
+        ['13:00', '首里城', '復元された正殿を見学（予約制・大人1,000円）', '首里城公園', [['yen','1,000円'],['book','予約時間を確認']]],
+        ['15:30', 'レンタカー返却 → 那覇空港', 'おみやげは空港でも買える', '那覇空港', [['time','返却15:30']]],
+        ['17:00', '那覇 → 羽田', '便は予約するときに決める', '', []],
+        ['21:00', '新宿で飲み（予算次第）', '余裕があれば歌舞伎町・相席屋、抑えるなら思い出横丁', '新宿 思い出横丁', []]
+      ],
+      rainStops: [
+        ['9:30', '沖縄こどもの国（屋内中心）', 'ワンダーミュージアムなど屋内の展示を中心に', '沖縄こどもの国', [['yen','1,000円'],['in','屋内']]],
+        ['13:00', '首里城（正殿の中を見学）', '建物の中はぬれない', '首里城公園', [['yen','1,000円'],['book','予約時間を確認']]],
+        ['15:30', 'レンタカー返却 → 那覇空港', 'おみやげは空港でも買える', '那覇空港', [['time','返却15:30']]],
+        ['17:00', '那覇 → 羽田', '便は予約するときに決める', '', []],
+        ['21:00', '新宿で飲み（予算次第）', '余裕があれば歌舞伎町・相席屋、抑えるなら思い出横丁', '新宿 思い出横丁', []]
+      ],
+      route: [['北谷のホテル', '9:00 出発'], ['沖縄こどもの国', '9:30'], ['首里城', '13:00'], ['那覇空港', '15:30 返却'], ['羽田空港', '夕方'], ['新宿のホテル', '泊']],
+      legs: [['car', 20], ['car', 40], ['car', 30], ['plane', 140], ['train', 45]],
+      pins: ['av', 'kodomo', 'shuri', 'airport'], region: 'okinawa'
+    },
+    { ymd: '2026-12-01', wx: '藤沢市 江の島', short: '12/1', date: '12/1 火', title: '鎌倉・江ノ島', area: '鎌倉・江ノ島・湘南の宝石', color: TK, stay: '22:00ごろ 鶴岡に帰宅',
+      rainNote: '鎌倉・江ノ島をやめてワーナーのハリー・ポッターへ（チケットは事前購入）',
+      stops: [
+        ['7:00', '新宿 → 鎌倉', 'JR湘南新宿ラインで約1時間', '', []],
+        ['8:00', '鶴岡八幡宮・鎌倉大仏', '江ノ電で移動（1日乗車券800円）', '鶴岡八幡宮', []],
+        ['11:30', '鎌倉高校前の踏切 → しらす丼', 'スラムダンクの踏切で写真', '鎌倉高校前駅', []],
+        ['12:30', '新江ノ島水族館', '片瀬江ノ島駅から徒歩3分。江の島に渡る前に寄れる', '新江ノ島水族館', [['opt','時間があれば'],['yen','2,800円'],['time','〜17:00'],['in','屋内']]],
+        ['13:30', '江の島（仲見世・江島神社・岩屋）', 'エスカーで上へ。奥の稚児ヶ淵は海と富士山の絶景', '江島神社', []],
+        ['16:00', 'シーキャンドル → 湘南の宝石', '12/1が点灯初日（17:00〜）', '江の島シーキャンドル', [['yen','500円＋展望台800円'],['time','17:00点灯']]],
+        ['17:45', '江の島 → 羽田 → 庄内（最終便）', '羽田20:15発・21:20 庄内着', '', [['time','17:45出発リミット']]]
+      ],
+      rainStops: [
+        ['8:30', '新宿 → 豊島園', '池袋から西武線で', ''],
+        ['9:30', 'ワーナー スタジオツアー東京', 'ハリー・ポッターの撮影セット（要事前購入）', 'ワーナー ブラザース スタジオツアー東京', [['book','要事前購入'],['in','屋内']]],
+        ['14:00', '池袋でランチ・買い物', '', '池袋駅'],
+        ['18:00', '羽田空港へ', '19:30には着いておく', '羽田空港'],
+        ['20:15', '羽田 → 庄内（最終便）', '21:20 庄内着', '']
+      ],
+      route: [['新宿のホテル', '7:00 出発'], ['鶴岡八幡宮', '8:00'], ['鎌倉大仏', '9:30'], ['鎌倉高校前', '11:30'], ['江の島', '13:30〜17:45'], ['羽田空港', '20:15 発'], ['庄内空港', '21:20 着'], ['鶴岡', '22:00ごろ']],
+      legs: [['train', 60], ['train', 15], ['train', 10], ['train', 15], ['train', 90], ['plane', 65], ['car', 25]],
+      pins: ['hachiman', 'daibutsu', 'koko', 'enoshima'], region: 'shonan', extra: ['enosui'],
+      zoom: { title: '江の島の中の回り方', pins: ['nakamise', 'candle', 'iwaya', 'candle'], extra: ['enosui'] }
+    }
+  ];
+
+  /* Okinawa map (stylized) */
+  var PLACES = {
+    airport: { n: '那覇空港', lon: 127.646, lat: 26.206, side: 'L' },
+    dmm: { n: 'DMMかりゆし', lon: 127.652, lat: 26.159, side: 'L' },
+    itoman: { n: '糸満', lon: 127.661, lat: 26.138, side: 'R', dy: 8 },
+    kokusai: { n: '国際通り', lon: 127.690, lat: 26.215, side: 'R', dy: 10 },
+    churaumi: { n: '美ら海', lon: 127.878, lat: 26.694, side: 'L' },
+    kouri: { n: '古宇利', lon: 128.020, lat: 26.690, side: 'R', dy: 20 },
+    av: { n: '北谷', lon: 127.754, lat: 26.316, side: 'L' },
+    tonan: { n: '東南植物楽園', lon: 127.795, lat: 26.366, side: 'R', dy: -6 },
+    kodomo: { n: 'こどもの国', lon: 127.807, lat: 26.335, side: 'R', dy: 6 },
+    shuri: { n: '首里城', lon: 127.719, lat: 26.217, side: 'R', dy: -8 },
+    hachiman: { n: '鶴岡八幡宮', lon: 139.5565, lat: 35.3259, side: 'L' },
+    daibutsu: { n: '鎌倉大仏', lon: 139.5358, lat: 35.3167, side: 'L', dy: -4 },
+    koko: { n: '鎌倉高校前', lon: 139.5007, lat: 35.3066, side: 'R', dy: -14 },
+    enosui: { n: 'えのすい', lon: 139.4811, lat: 35.3088, side: 'R', dy: -14 },
+    enoshima: { n: '江の島', lon: 139.4800, lat: 35.3000, side: 'L', dy: 16 },
+    nakamise: { n: '仲見世・江島神社', lon: 139.4812, lat: 35.3010, side: 'R', dy: -18 },
+    iwaya: { n: '岩屋・稚児ヶ淵', lon: 139.4728, lat: 35.2978, side: 'L', dy: 16 },
+    candle: { n: 'シーキャンドル', lon: 139.4778, lat: 35.2998, side: 'R', dy: 26 }
+  };
+  var ISLAND = [[127.66,26.09],[127.74,26.10],[127.82,26.15],[127.86,26.22],[127.88,26.30],[127.96,26.37],[127.98,26.45],[128.05,26.52],[128.12,26.60],[128.22,26.70],[128.32,26.85],[128.28,26.88],[128.18,26.86],[128.08,26.78],[128.00,26.72],[127.95,26.68],[127.88,26.72],[127.86,26.70],[127.87,26.65],[127.93,26.60],[127.90,26.55],[127.85,26.48],[127.75,26.42],[127.74,26.38],[127.75,26.32],[127.72,26.27],[127.68,26.24],[127.64,26.20],[127.64,26.14]];
+  var KOURI = [[128.00,26.70],[128.03,26.70],[128.035,26.72],[128.005,26.725]];
+  var COS = 0.896;
+  var SHONAN_LAND = [[139.44,35.36],[139.44,35.313],[139.470,35.312],[139.480,35.3105],[139.487,35.309],[139.495,35.3075],[139.505,35.3055],[139.512,35.3045],[139.518,35.303],[139.523,35.2995],[139.528,35.3025],[139.535,35.306],[139.545,35.3075],[139.555,35.307],[139.562,35.303],[139.570,35.298],[139.59,35.296],[139.59,35.36]];
+  var ENOSHIMA = [[139.4715,35.2998],[139.4755,35.3024],[139.4815,35.3030],[139.4868,35.3008],[139.4855,35.2972],[139.4790,35.2962],[139.4735,35.2972]];
+  var REGIONS = {
+    okinawa: { cos: 0.896, lands: [ISLAND, KOURI], bridge: null },
+    shonan: { cos: 0.816, lands: [SHONAN_LAND, ENOSHIMA], bridge: [[139.4838,35.3022],[139.4846,35.3090]] }
+  };
+
+  function mapSVG(sets, opts) {
+    // sets: [{color, ids:[...]}]; opts: {w,h,pad,labels:bool}
+    var w = opts.w, h = opts.h, pad = opts.pad;
+    var pts = [];
+    sets.forEach(function (s) { s.ids.forEach(function (id) { pts.push(PLACES[id]); }); });
+    (opts.extra || []).forEach(function (id) { pts.push(PLACES[id]); });
+    var minLon = Math.min.apply(null, pts.map(function (p) { return p.lon; })), maxLon = Math.max.apply(null, pts.map(function (p) { return p.lon; }));
+    var minLat = Math.min.apply(null, pts.map(function (p) { return p.lat; })), maxLat = Math.max.apply(null, pts.map(function (p) { return p.lat; }));
+    var R = REGIONS[opts.region || 'okinawa'], C = R.cos;
+    var minSpan = opts.region === 'shonan' ? 0.01 : 0.04;
+    var spanX = Math.max((maxLon - minLon) * C, minSpan), spanY = Math.max(maxLat - minLat, minSpan);
+    var k = Math.min((w - 2 * pad) / spanX, (h - 2 * pad) / spanY);
+    var cx = (minLon + maxLon) / 2, cy = (minLat + maxLat) / 2;
+    function P(lon, lat) { return [w / 2 + (lon - cx) * C * k, h / 2 - (lat - cy) * k]; }
+    function poly(list) { return list.map(function (q) { var p = P(q[0], q[1]); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '); }
+    var uid = 'm' + Math.random().toString(36).slice(2, 7);
+    var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + opts.label + '">';
+    s += '<defs>';
+    sets.forEach(function (st, i) {
+      s += '<marker id="' + uid + 'a' + i + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="' + st.color + '"/></marker>';
+    });
+    s += '</defs>';
+    s += '<rect width="' + w + '" height="' + h + '" style="fill: var(--sea)"/>';
+    R.lands.forEach(function (land) { s += '<polygon points="' + poly(land) + '" style="fill: var(--land); stroke: var(--coast)" stroke-width="2" stroke-linejoin="round"/>'; });
+    if (R.bridge) { var b1 = P(R.bridge[0][0], R.bridge[0][1]), b2 = P(R.bridge[1][0], R.bridge[1][1]); s += '<line x1="' + b1[0].toFixed(1) + '" y1="' + b1[1].toFixed(1) + '" x2="' + b2[0].toFixed(1) + '" y2="' + b2[1].toFixed(1) + '" style="stroke: var(--coast)" stroke-width="5" stroke-linecap="round"/>'; }
+    sets.forEach(function (st, i) {
+      for (var j = 0; j < st.ids.length - 1; j++) {
+        var a = P(PLACES[st.ids[j]].lon, PLACES[st.ids[j]].lat), b = P(PLACES[st.ids[j + 1]].lon, PLACES[st.ids[j + 1]].lat);
+        var dx = b[0] - a[0], dy = b[1] - a[1], len = Math.sqrt(dx * dx + dy * dy) || 1;
+        var off = Math.min(40, len * 0.22);
+        var mx = (a[0] + b[0]) / 2 - dy / len * off, my = (a[1] + b[1]) / 2 + dx / len * off;
+        var shrink = 11 / len;
+        var bx = b[0] - dx * shrink, by = b[1] - dy * shrink;
+        s += '<path d="M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) + ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + bx.toFixed(1) + ' ' + by.toFixed(1) + '" fill="none" stroke="' + st.color + '" stroke-width="' + (opts.thick || 3.5) + '" stroke-linecap="round" stroke-dasharray="' + (opts.dash || '0') + '" marker-end="url(#' + uid + 'a' + i + ')"/>';
+      }
+    });
+    var drawn = {};
+    sets.forEach(function (st) {
+      st.ids.forEach(function (id, n) {
+        if (drawn[id]) return;
+        drawn[id] = true;
+        var p = P(PLACES[id].lon, PLACES[id].lat);
+        s += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="7" style="fill: var(--card)" stroke="' + st.color + '" stroke-width="3.5"/>';
+        if (opts.labels !== false) {
+          var right = PLACES[id].side ? PLACES[id].side === 'R' : p[0] < w * 0.62;
+          var lw = PLACES[id].n.length * (opts.fs || 14) + 16;
+          if (right && p[0] + lw > w) right = false;
+          if (!right && p[0] - lw < 0) right = true;
+          var tx = right ? p[0] + 12 : p[0] - 12;
+          var ty = p[1] + 5 + (PLACES[id].dy || 0);
+          s += '<text x="' + tx.toFixed(1) + '" y="' + ty.toFixed(1) + '" text-anchor="' + (right ? 'start' : 'end') + '" font-size="' + (opts.fs || 14) + '" font-weight="700" style="fill: var(--ink); stroke: var(--land)" stroke-width="4" paint-order="stroke" font-family="Noto Sans JP, sans-serif">' + PLACES[id].n + '</text>';
+        }
+      });
+    });
+    (opts.extra || []).forEach(function (id) {
+      var p = P(PLACES[id].lon, PLACES[id].lat);
+      s += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="7" style="fill: var(--land)" stroke="' + sets[0].color + '" stroke-width="3" stroke-dasharray="3 3"/>';
+      var er = PLACES[id].side === 'R';
+      var elw = PLACES[id].n.length * ((opts.fs || 14) - 2) + 16;
+      if (er && p[0] + elw > w) er = false;
+      if (!er && p[0] - elw < 0) er = true;
+      var tx = er ? p[0] + 12 : p[0] - 12;
+      s += '<text x="' + tx.toFixed(1) + '" y="' + (p[1] + 5 + (PLACES[id].dy || 0)).toFixed(1) + '" text-anchor="' + (er ? 'start' : 'end') + '" font-size="' + ((opts.fs || 14) - 2) + '" font-weight="700" style="fill: var(--sub); stroke: var(--land)" stroke-width="4" paint-order="stroke" font-family="Noto Sans JP, sans-serif">' + PLACES[id].n + '</text>';
+    });
+    s += '</svg>';
+    return s;
+  }
+
+  /* ---------------- helpers ---------------- */
+  var MEM = {};
+  function store(key, val) {
+    if (val === undefined) {
+      if (key in MEM) return MEM[key];
+      try { return JSON.parse(localStorage.getItem('okinawa-trip-' + key)); } catch (e) { return null; }
+    }
+    MEM[key] = val;
+    try { localStorage.setItem('okinawa-trip-' + key, JSON.stringify(val)); return true; } catch (e) { return null; }
+  }
+  function isOpt(s) { return (s[4] || []).some(function (t) { return t[0] === 'opt'; }); }
+  function tagsHtml(tags, showIn) {
+    var list = (tags || []).filter(function (t) { return t[0] !== 'in' || showIn; });
+    if (!list.length) return '';
+    return '<span class="tags">' + list.map(function (t) { return '<span class="tag t-' + t[0] + '">' + t[1] + '</span>'; }).join('') + '</span>';
+  }
+  function mapsUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q); }
+  function fmtMin(m) { var h = Math.floor(m / 60), r = m % 60; return (h ? h + '時間' : '') + (r ? r + '分' : (h ? '' : '0分')); }
+  function toMin(t) { var p = t.split(':'); return parseInt(p[0], 10) * 60 + parseInt(p[1] || '0', 10); }
+  // 旅行中は朝4時までを前の日として扱う（夜遊びで日付をまたいでも前の日の予定のまま）
+  function tripNow() { return new Date(Date.now() - 4 * 3600000); }
+  function ymdNow() { var d = tripNow(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function nowMin() { var d = new Date(); var m = d.getHours() * 60 + d.getMinutes(); return d.getHours() < 4 ? m + 1440 : m; }
+
+  var todayIdx = DAYS.map(function (d) { return d.ymd; }).indexOf(ymdNow());
+  var state = { day: todayIdx >= 0 ? todayIdx : 0, rain: store('rain') || {} };
+
+  function setDayColor(c) { document.documentElement.style.setProperty('--day', c); }
+
+  var CODES = ['TYO', 'NAH', 'MOT', 'SRI', 'ENO'];
+  function header(d, i, kicker) {
+    return '<div class="kicker"><span>' + kicker + '</span>' + (i === todayIdx ? '<span class="badge">今日</span>' : '') + '</div>' +
+      '<h1 class="round">' + d.title + '</h1><div class="area">' + d.date + '・' + d.area + '</div>' +
+      '<a class="wxbtn" href="' + wxUrl(d) + '">' + ico('cloud', 16) + d.date.split(' ')[0] + 'の天気予報（' + d.wx.split(' ')[0] + '）</a>';
+  }
+  function wxUrl(d) { var md = d.date.split(' ')[0].split('/'); return 'https://www.google.com/search?q=' + encodeURIComponent(d.wx + ' 天気 ' + md[0] + '月' + md[1] + '日'); }
+  function tabs(el, onPick) {
+    el.innerHTML = DAYS.map(function (d, i) {
+      var on = i === state.day;
+      return '<button type="button" data-i="' + i + '" aria-pressed="' + on + '" aria-label="' + d.date + ' ' + d.title + '"><i>' + d.short + '</i><b>' + CODES[i] + '</b></button>';
+    }).join('');
+    Array.prototype.forEach.call(el.querySelectorAll('button'), function (b) {
+      b.addEventListener('click', function () { state.day = +b.getAttribute('data-i'); onPick(); });
+    });
+  }
+
+  /* ---------------- PLAN ---------------- */
+  function renderPlan() {
+    var d = DAYS[state.day], i = state.day;
+    setDayColor(d.color);
+    document.getElementById('planHead').innerHTML = header(d, i, 'DAY ' + i + ' · ' + CODES[i]);
+    tabs(document.getElementById('planTabs'), renderPlan);
+    var rainOn = !!state.rain[i] && !!d.rainStops;
+    var stops = rainOn ? d.rainStops : d.stops;
+    var html = '';
+    var curIdx = -1;
+    if (i === todayIdx) {
+      var nm = nowMin();
+      stops.forEach(function (s, k) { if (!isOpt(s) && toMin(s[0]) <= nm) curIdx = k; });
+      // 最後の予定から3時間たったら「いま」は出さない（帰宅後・就寝後）
+      if (curIdx === stops.length - 1 && nm - toMin(stops[curIdx][0]) > 180) curIdx = stops.length;
+    }
+    var nowS = i === todayIdx && curIdx >= 0 && curIdx < stops.length ? stops[curIdx] : null;
+    var nextS = null;
+    for (var q = curIdx + 1; q < stops.length; q++) { if (!isOpt(stops[q])) { nextS = stops[q]; break; } }
+    var left = '';
+    if (nextS && i === todayIdx) { var diff = toMin(nextS[0]) - nowMin(); if (diff > 0) left = fmtMin(diff); }
+    if (nowS) {
+      html += '<div class="bp"><div class="bh"><span>NOW BOARDING</span><span>いま ' + nowS[0] + '〜</span></div>' +
+        '<div class="bm"><span class="name">' + nowS[1] + '</span><span class="memo">' + nowS[2] + '</span>' + tagsHtml(nowS[4], rainOn) +
+        (nowS[3] ? '<a class="bigmap" href="' + mapsUrl(nowS[3]) + '">' + ico('pin') + 'Googleマップで開く</a>' : '') + '</div>';
+      if (nextS) html += '<div class="tperf"></div><div class="bg3"><span><span class="lb">NEXT</span><b class="mono">' + nextS[0] + '</b></span><span><span class="lb">つぎの行き先</span><span class="dest"><b style="font-size:14px">' + nextS[1] + '</b></span></span><span><span class="lb" style="text-align:right">あと</span><b class="mono left">' + (left || '-') + '</b></span></div>';
+      html += '</div>';
+    } else if (nextS && i === todayIdx) {
+      html += '<div class="bp"><div class="bh"><span>FIRST DEPARTURE</span><span>さいしょ</span></div>' +
+        '<div class="bm"><span class="name">' + nextS[1] + '</span><span class="memo">' + nextS[2] + '</span>' + tagsHtml(nextS[4], rainOn) + '</div>' +
+        '<div class="tperf"></div><div class="bg3"><span><span class="lb">DEPARTURE</span><b class="mono">' + nextS[0] + '</b></span><span></span><span><span class="lb" style="text-align:right">あと</span><b class="mono left">' + (left || '-') + '</b></span></div></div>';
+    }
+    if (i !== todayIdx) html += '<div class="hint">旅行の当日は、ここに「いま・つぎ」の搭乗券が出ます。</div>';
+    if (i === todayIdx && curIdx === stops.length) html += '<div class="hint">今日の予定はぜんぶ終わりました。おつかれさま！</div>';
+    html += '<div class="rainrow"><div class="t"><b>雨モード' + (d.rainStops ? '' : '（この日はそのまま）') + '</b><span>' + d.rainNote + '</span></div>' +
+      (d.rainStops ? '<button type="button" class="switch" role="switch" aria-checked="' + rainOn + '" aria-label="雨モード" id="rainSw"></button>' : '') + '</div>';
+    html += '<div class="itin"><div class="ih"><span class="lb">' + (rainOn ? 'ITINERARY · 雨の日の予定（仮）' : 'ITINERARY · この日の予定') + '</span><span class="lb">' + d.stay + '</span></div>';
+    var nextK = nextS && i === todayIdx ? stops.indexOf(nextS) : -1;
+    stops.forEach(function (s, k) {
+      var past = i === todayIdx && k < curIdx;
+      var cls = 'stop' + (past ? ' past' : '') + (k === curIdx ? ' cur' : '') + (isOpt(s) ? ' opt' : '');
+      var badge = past ? '<span class="done">済</span>' : (k === nextK ? '<span class="nx">NEXT</span>' : '');
+      html += '<div class="' + cls + '"><span class="time">' + (isOpt(s) ? '空き時間' : s[0]) + '</span><span class="body"><span class="n">' + s[1] + '</span>' + (s[2] ? '<span class="m">' + s[2] + '</span>' : '') + tagsHtml(s[4], rainOn) + '</span>' + badge +
+        (s[3] ? '<a class="mapbtn" href="' + mapsUrl(s[3]) + '" aria-label="' + s[1] + 'をGoogleマップで開く">' + ico('pin', 18) + '地図</a>' : '') + '</div>';
+    });
+    html += '</div>';
+    document.getElementById('planBody').innerHTML = html;
+    var sw = document.getElementById('rainSw');
+    if (sw) sw.addEventListener('click', function () { state.rain[i] = !state.rain[i]; store('rain', state.rain); renderPlan(); });
+  }
+
+  /* ---------------- ROUTE ---------------- */
+  function renderRoute() {
+    var d = DAYS[state.day], i = state.day;
+    setDayColor(d.color);
+    document.getElementById('routeHead').innerHTML = header(d, i, 'ROUTE · DAY ' + i);
+    tabs(document.getElementById('routeTabs'), renderRoute);
+    var total = d.legs.reduce(function (a, l) { return a + l[1]; }, 0);
+    var html = '<div class="routehead"><span class="sectiontitle" style="margin:0">移動ルート</span><span class="total">移動の合計 <b>' + fmtMin(total) + '</b></span></div>';
+    if (d.pins) {
+      var ids = d.pins.slice();
+      html += '<div class="mapcard">' + mapSVG([{ color: d.color, ids: ids }], { w: 360, h: 300, pad: 46, label: d.date + 'のルートの地図', fs: d.region === 'shonan' ? 13 : 15, region: d.region, extra: d.extra }) + '</div>';
+      if (d.zoom) {
+        html += '<div class="sectiontitle">' + d.zoom.title + '</div>';
+        html += '<div class="mapcard">' + mapSVG([{ color: d.color, ids: d.zoom.pins }], { w: 360, h: 300, pad: 50, label: d.zoom.title + 'の地図', fs: 14, region: d.region, extra: d.zoom.extra }) + '</div>';
+        html += '<div class="hint">仲見世通り → エスカーで上へ → 江島神社 → 島の奥の岩屋・稚児ヶ淵 → シーキャンドルに戻って夕日と点灯。点線の丸は「時間があれば」寄る場所です。</div>';
+      } else if (d.extra) html += '<div class="hint">点線の丸は「時間があれば」寄る場所です。</div>';
+    }
+    html += '<div class="sectiontitle">ルート図</div>';
+    html += '<div class="card metro">';
+    d.route.forEach(function (r, k) {
+      var ends = k === 0 || k === d.route.length - 1;
+      html += '<div class="node' + (ends ? ' ends' : '') + '"><span class="dot"></span><span><div class="nm">' + r[0] + '</div><div class="sb">' + r[1] + '</div></span></div>';
+      var leg = d.legs[k];
+      if (leg) {
+        html += '<div class="leg ' + leg[0] + '"><span class="rail"><i></i></span><span class="chip">' + ico(leg[0], 16) + MODE[leg[0]] + '　約' + fmtMin(leg[1]) + '</span></div>';
+      }
+    });
+    html += '</div>';
+    html += '<div class="legend"><span><i style="background:var(--day)"></i>車</span><span><i style="background:repeating-linear-gradient(90deg,var(--day) 0 5px,transparent 5px 8px)"></i>飛行機・電車</span><span><i style="background:repeating-linear-gradient(90deg,var(--day) 0 2px,transparent 2px 5px)"></i>徒歩</span></div>';
+    html += '<div class="hint">移動時間は目安です。道の混み具合や乗り換えで変わります。地図はイメージで、正確な道は「予定」タブの各地図ボタンから確認してください。</div>';
+    document.getElementById('routeBody').innerHTML = html;
+  }
+
+  /* ---------------- HOME ---------------- */
+  function renderHome() {
+    setDayColor('#0B5F68');
+    var start = new Date(2026, 10, 27), end = new Date(2026, 11, 1), t = tripNow();
+    var today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    var lab = document.getElementById('countLabel'), big = document.getElementById('countBig');
+    if (today < start) { lab.textContent = '出発まで'; big.innerHTML = 'あと' + Math.round((start - today) / 86400000) + '<small>日</small>'; }
+    else if (today <= end) { lab.textContent = '今日は'; big.innerHTML = '旅の' + (Math.round((today - start) / 86400000) + 1) + '<small>日目</small>'; }
+    else { lab.textContent = 'おつかれさま'; big.innerHTML = 'おかえり<small>なさい</small>'; }
+    var bt = budgetTotal();
+    document.getElementById('homePer').textContent = man(bt);
+    document.getElementById('homeTwo').textContent = man(bt * 2);
+    var om = document.getElementById('overviewMap');
+    if (!om.innerHTML) {
+      om.innerHTML = mapSVG([
+        { color: '#0E7C86', ids: ['airport', 'dmm', 'itoman', 'kokusai'] },
+        { color: '#1F5F99', ids: ['kokusai', 'churaumi', 'kouri', 'av', 'tonan'] },
+        { color: '#B4472A', ids: ['av', 'kodomo', 'shuri', 'airport'] }
+      ], { w: 360, h: 460, pad: 34, label: '沖縄の3日間のルートの地図', fs: 13, thick: 3, region: 'okinawa' });
+    }
+  }
+
+  /* ---------------- CHECK ---------------- */
+  var CHECKS = [
+    { g: '予約するもの', items: [
+      ['f1', '飛行機 11/27 庄内 → 羽田', '17:30発'], ['f2', '飛行機 11/28 羽田 → 那覇', '6:25発'], ['f3', '飛行機 11/30 那覇 → 羽田', '夕方の便'], ['f4', '飛行機 12/1 羽田 → 庄内', '20:15発'],
+      ['h1', 'ホテル 11/27 羽田空港周辺', ''], ['h2', 'ホテル 11/28 那覇', '国際通り周辺'], ['h3', 'ホテル 11/29 北谷', 'アメリカンビレッジ周辺'], ['h4', 'ホテル 11/30 新宿', ''],
+      ['c1', 'レンタカー', '11/28 10:00 〜 11/30 15:30・保険も'], ['s1', '首里城 正殿の予約', '11/30 13:00ごろ'], ['s2', '美ら海水族館のチケット', 'ネットで先に買う']
+    ]},
+    { g: '出発前にやること', items: [
+      ['p1', '11/27 の早退（16:00）を伝える', ''], ['p2', 'オンラインチェックイン', '荷物は機内持ち込みに'], ['p3', '12/1 江の島の天気を確認', '雨ならワーナー（屋内）']
+    ]},
+    { g: '持ち物', items: [
+      ['b1', '運転免許証', 'レンタカーに必須'], ['b2', '薄手の上着＋ダウン', '沖縄は20℃前後、江の島の夜は5℃前後'], ['b3', '歩きやすい靴', ''], ['b4', '日焼け止め', ''], ['b5', 'モバイルバッテリー', '地図と写真でスマホを使う']
+    ]}
+  ];
+  function renderCheck() {
+    setDayColor('#0E7C86');
+    var done = store('check') || {};
+    var all = 0, cnt = 0;
+    CHECKS.forEach(function (g) { g.items.forEach(function (it) { all++; if (done[it[0]]) cnt++; }); });
+    document.getElementById('checkProg').innerHTML = '<div role="progressbar" aria-label="すんだもの" aria-valuemin="0" aria-valuemax="' + all + '" aria-valuenow="' + cnt + '"><i style="width:' + Math.round(cnt / all * 100) + '%"></i></div><span class="mono">' + cnt + ' / ' + all + '</span>';
+    var TAGS = [['BOOK', '#0E7C86'], ['TODO', '#1F5F99'], ['BAG', '#B4472A']];
+    var html = '';
+    CHECKS.forEach(function (g, gi) {
+      var c = TAGS[gi] || TAGS[0], gd = g.items.filter(function (it) { return done[it[0]]; }).length;
+      html += '<div class="btag" style="--tc:' + c[1] + '"><div class="side" style="background:' + c[1] + '"><span class="hole"></span><b>' + c[0] + '</b></div><div class="main"><div class="gt"><b>' + g.g + '</b><span class="mono" style="color:var(--tc)">' + gd + ' / ' + g.items.length + '</span></div>';
+      g.items.forEach(function (it) {
+        var on = !!done[it[0]];
+        html += '<label class="chk' + (on ? ' done' : '') + '"><input type="checkbox" data-k="' + it[0] + '"' + (on ? ' checked' : '') + '><span><span class="n">' + it[1] + '</span>' + (it[2] ? '<span class="m">' + it[2] + '</span>' : '') + '</span>' + (on ? '<span class="stamp" aria-hidden="true">CHECKED</span>' : '') + '</label>';
+      });
+      html += '</div></div>';
+    });
+    var body = document.getElementById('checkBody');
+    body.innerHTML = html;
+    Array.prototype.forEach.call(body.querySelectorAll('input[type=checkbox]'), function (cb) {
+      cb.addEventListener('change', function () { var dd = store('check') || {}; dd[cb.getAttribute('data-k')] = cb.checked; store('check', dd); renderCheck(); });
+    });
+  }
+
+  /* ---------------- BUDGET ---------------- */
+  // per: 1人あたり、total: 1台・1部屋の金額（2人で割る）
+  var BUDGET = [
+    { t: '飛行機', rows: [
+      ['11/27 庄内 → 羽田', '金曜夕方・直前なので高めに見積もり', 18000],
+      ['11/28 羽田 → 那覇', '11/28のJAL最安が30,520円', 30000],
+      ['11/30 那覇 → 羽田', '11月の最安は1.3〜1.5万円＋直前分', 20000],
+      ['12/1 羽田 → 庄内', '最安は1万円台前半＋直前分', 16000] ]},
+    { t: 'レンタカー（車1台を2人で割る）', rows: [
+      ['車の代金 3日間', 'コンパクトカーは1日5,500円〜', null, 18000],
+      ['保険（免責補償＋NOC補償）', '車1台につき', null, 5000],
+      ['ガソリン代', '那覇〜本部の往復など', null, 4000],
+      ['高速代', '沖縄自動車道', null, 3000],
+      ['駐車場代', '那覇・北谷のホテル', null, 3000] ]},
+    { t: 'そのほかの移動', rows: [
+      ['タクシー 歌舞伎町 → 羽田', '深夜の定額9,800円＋高速代', null, 11000],
+      ['東京・鎌倉・江の島の電車', '江ノ電1日乗車券800円を含む', 5000] ]},
+    { t: '宿泊（2人1室）', rows: [
+      ['11/27 羽田空港周辺', '料金は未確認（目安）', null, 16000],
+      ['11/28 那覇', '料金は未確認（目安）', null, 14000],
+      ['11/29 北谷', '料金は未確認（目安）', null, 20000],
+      ['11/30 新宿', '料金は未確認（目安）', null, 20000] ]},
+    { t: '入場料', rows: [
+      ['DMMかりゆし水族館', '2,800円〜', 2800],
+      ['沖縄美ら海水族館', '大人2,180円', 2180],
+      ['東南植物楽園（夜）', '前シーズンの料金', 2500],
+      ['沖縄こどもの国', '16歳以上1,000円', 1000],
+      ['首里城（正殿）', '大人1,000円・予約制', 1000],
+      ['鎌倉大仏・長谷寺', '目安', 700],
+      ['江の島（コッキング苑・シーキャンドル）', '前シーズンの料金', 1300] ]},
+    { t: '食事', rows: [
+      ['4日分の朝・昼・夜', '糸満のロブスター、しらす丼など', 28000],
+      ['カフェ・おやつ・飲み物', '', 5000] ]},
+    { t: '遊び・おみやげ', rows: [
+      ['11/27 金の夜（相席屋・キャバクラ）', '使い方で大きく変わる', 25000],
+      ['おみやげ', '', 10000] ]}
+  ];
+  var OPT_MONDAY = 25000;
+  function yen(n) { return Math.round(n).toLocaleString('ja-JP') + '円'; }
+  function man(n) { return '約' + (Math.round(n / 1000) / 10).toFixed(1) + '万円'; }
+  function budgetTotal() {
+    var t = 0;
+    BUDGET.forEach(function (g) { g.rows.forEach(function (r) { t += r[2] != null ? r[2] : r[3] / 2; }); });
+    return t;
+  }
+  function renderBudget() {
+    setDayColor('#0B5F68');
+    var per = budgetTotal();
+    var html = '<div class="receipt"><div class="rt"><span class="lb">PASSENGER × 2</span><span class="lb">1人あたり</span></div>' +
+      '<div class="rtot"><span style="display:flex;flex-direction:column"><span class="lb">TOTAL / 1人</span><span class="per round">' + man(per) + '</span><span class="mono" style="font-size:12px;color:var(--sub)">' + yen(per) + '</span></span>' +
+      '<span style="display:flex;flex-direction:column;text-align:right"><span class="lb">2人の合計</span><span class="two">' + man(per * 2) + '</span><span class="mono" style="font-size:12px;color:var(--sub)">' + yen(per * 2) + '</span></span></div><div class="tperf flat"></div><div class="rgap"></div>';
+    BUDGET.forEach(function (g) {
+      var gp = 0;
+      var rows = g.rows.map(function (r) {
+        var p = r[2] != null ? r[2] : r[3] / 2; gp += p;
+        return '<div class="brow"><span class="l"><span>' + r[0] + '</span>' + (r[1] ? '<small>' + r[1] + '</small>' : '') + '</span>' +
+          '<span class="r"><b>' + yen(p) + '</b><small>2人 ' + yen(p * 2) + '</small></span></div>';
+      }).join('');
+      html += '<details><summary><span class="l"><b>' + g.t + '</b><small>' + g.rows.length + '項目・タップで内訳</small></span><span class="dots"></span><span class="v mono">¥' + Math.round(gp).toLocaleString('ja-JP') + '</span><span class="ar" aria-hidden="true">›</span></summary>' + rows + '</details>';
+    });
+    html += '<div class="rgap"></div><div class="tperf flat"></div><div class="rf"><span><b>11/30 月の夜も遊ぶ場合</b><br>1人 +' + yen(OPT_MONDAY) + '／2人 +' + yen(OPT_MONDAY * 2) + '<br>合計は1人 ' + man(per + OPT_MONDAY) + '、2人で ' + man((per + OPT_MONDAY) * 2) + '</span><span class="barcode" aria-hidden="true"></span></div></div>';
+    html += '<div class="hint">確認できた料金：美ら海2,180円、こどもの国1,000円、首里城1,000円、江ノ電1日乗車券800円、深夜の定額タクシー9,800円。飛行機は11/21時点の最安値の情報をもとにしていて、予約するまで毎日変わります。ホテルの料金はまだ確認できていません。</div>';
+    document.getElementById('budgetBody').innerHTML = html;
+  }
+
+  /* ---------------- MEMO ---------------- */
+  function updateTel() {
+    Array.prototype.forEach.call(document.querySelectorAll('#memoForm [data-tel]'), function (a) {
+      var el = document.querySelector('#memoForm [data-key="' + a.getAttribute('data-tel') + '"]');
+      var m = /(0\d{1,4})[-\s]?(\d{1,4})[-\s]?(\d{3,4})/.exec(el.value || '');
+      if (m) { a.href = 'tel:' + m[1] + m[2] + m[3]; a.hidden = false; a.setAttribute('aria-label', m[0] + 'に電話する'); }
+      else { a.hidden = true; a.removeAttribute('href'); }
+    });
+  }
+  function renderMemo() {
+    setDayColor('#1C2B33');
+    var memo = store('memo') || {};
+    var form = document.getElementById('memoForm');
+    Array.prototype.forEach.call(form.querySelectorAll('[data-key]'), function (el) {
+      if (document.activeElement !== el) el.value = memo[el.getAttribute('data-key')] || '';
+    });
+    updateTel();
+  }
+  (function bindMemo() {
+    var form = document.getElementById('memoForm'), timer;
+    form.addEventListener('submit', function (e) { e.preventDefault(); });
+    form.addEventListener('input', function () {
+      updateTel();
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        var memo = {};
+        Array.prototype.forEach.call(form.querySelectorAll('[data-key]'), function (el) { memo[el.getAttribute('data-key')] = el.value; });
+        var ok = store('memo', memo) === true;
+        document.getElementById('savedMsg').textContent = ok ? 'このスマホに保存しました' : 'このブラウザでは保存できません（画面を閉じると消えます）';
+      }, 400);
+    });
+  })();
+
+  /* ---------------- theme ---------------- */
+  var themeBtn = document.getElementById('themeBtn');
+  function applyTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    themeBtn.setAttribute('aria-pressed', String(dark));
+    themeBtn.innerHTML = ico(dark ? 'sun' : 'moon', 20);
+    themeBtn.setAttribute('aria-label', dark ? '明るい表示にする' : '夜用の暗い表示にする');
+    var meta = document.querySelector('meta[name=theme-color]'); if (meta) meta.setAttribute('content', dark ? '#0F1C24' : '#0B5F68');
+  }
+  var savedTheme = store('dark');
+  var hr = new Date().getHours();
+  applyTheme(savedTheme === null || savedTheme === undefined ? (hr >= 18 || hr < 6) : !!savedTheme);
+  themeBtn.addEventListener('click', function () { var d = !document.body.classList.contains('dark'); store('dark', d); applyTheme(d); });
+
+  /* ---------------- nav / routing ---------------- */
+  var VIEWS = [['home', 'ホーム', renderHome], ['plan', '予定', renderPlan], ['route', 'ルート', renderRoute], ['check', 'チェック', renderCheck], ['memo', 'メモ', renderMemo]];
+  var HIDDEN = [['budget', '予算', renderBudget, 'home']];
+  document.getElementById('navIn').innerHTML = VIEWS.map(function (v) {
+    return '<a href="#' + v[0] + '" data-v="' + v[0] + '">' + ico(v[0], 22) + v[1] + '</a>';
+  }).join('');
+  function show() {
+    var h = (location.hash || '').replace('#', '');
+    var all = VIEWS.concat(HIDDEN);
+    var v = all.filter(function (x) { return x[0] === h; })[0] || VIEWS[todayIdx >= 0 ? 1 : 0];
+    var navKey = v[3] || v[0];
+    all.forEach(function (x) { document.getElementById('v-' + x[0]).classList.toggle('on', x === v); });
+    VIEWS.forEach(function (x) {
+      var a = document.querySelector('nav.tabs a[data-v="' + x[0] + '"]');
+      if (x[0] === navKey) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    v[2]();
+    window.scrollTo(0, 0);
+  }
+  document.getElementById('goToday').addEventListener('click', function () {
+    state.day = todayIdx >= 0 ? todayIdx : 0;
+    location.hash = 'plan';
+  });
+  window.addEventListener('hashchange', show);
+  setInterval(function () {
+    todayIdx = DAYS.map(function (d) { return d.ymd; }).indexOf(ymdNow());
+    var cur = (location.hash || '').replace('#', '');
+    if (document.getElementById('v-plan').classList.contains('on')) renderPlan();
+    else if (document.getElementById('v-home').classList.contains('on')) renderHome();
+  }, 60000);
+  show();
+})();
+</script>
+</body>
+</html>
