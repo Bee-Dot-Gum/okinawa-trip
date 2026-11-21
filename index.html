@@ -761,7 +761,16 @@
         '<div class="bm"><span class="name">' + nextS[1] + '</span><span class="memo">' + nextS[2] + '</span>' + tagsHtml(nextS[4], rainOn) + '</div>' +
         '<div class="tperf"></div><div class="bg3"><span><span class="lb">DEPARTURE</span><b class="mono">' + nextS[0] + '</b></span><span></span><span><span class="lb" style="text-align:right">あと</span><b class="mono left">' + (left || '-') + '</b></span></div></div>';
     }
-    if (i !== todayIdx) html += '<div class="hint">旅行の当日は、ここに「いま・つぎ」の搭乗券が出ます。</div>';
+    if (i !== todayIdx) {
+      var real = stops.filter(function (s) { return !isOpt(s); });
+      var f = real[0], n2 = real[1];
+      if (f) {
+        html += '<div class="bp"><div class="bh"><span>FIRST DEPARTURE</span><span>' + d.date + '</span></div>' +
+          '<div class="bm"><span class="name">' + f[1] + '</span><span class="memo">' + f[2] + '</span>' + tagsHtml(f[4], rainOn) + '</div>' +
+          '<div class="tperf"></div><div class="bg3"><span><span class="lb">NEXT</span><b class="mono">' + (n2 ? n2[0] : '-') + '</b></span><span><span class="lb">DESTINATION</span><span class="dest"><b style="font-size:14px">' + (n2 ? n2[1] : '-') + '</b></span></span><span><span class="lb" style="text-align:right">出発</span><b class="mono left">' + f[0] + '</b></span></div></div>';
+        html += '<div class="hint">旅行の当日は、時間に合わせて「いま・つぎ」に自動で切り替わります。</div>';
+      }
+    }
     if (i === todayIdx && curIdx === stops.length) html += '<div class="hint">今日の予定はぜんぶ終わりました。おつかれさま！</div>';
     html += '<div class="rainrow"><div class="t"><b>雨モード' + (d.rainStops ? '' : '（この日はそのまま）') + '</b><span>' + d.rainNote + '</span></div>' +
       (d.rainStops ? '<button type="button" class="switch" role="switch" aria-checked="' + rainOn + '" aria-label="雨モード" id="rainSw"></button>' : '') + '</div>';
